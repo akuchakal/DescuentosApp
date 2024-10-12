@@ -23,7 +23,23 @@ class CalcularViewModel2: ViewModel() {
     var showAlert by mutableStateOf(false)
         private set
 
-    fun cal() {
+    fun onValuePrecio(value: String) {
+        precio = value
+    }
 
+    //Funciones de setteo para cuandos on pocos campos!
+    fun onValueDescuento(value: String) {
+        descuento = value
+    }
+
+    fun onValueShowAlert(value: Boolean) {
+        showAlert = value
+    }
+
+    fun setOnValue(value: String, fieldName: String) {
+        when(fieldName) {
+            "precio" -> precio = value
+            "descuento" -> descuento = value
+        }
     }
 }

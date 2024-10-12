@@ -53,22 +53,25 @@ fun ContentHomeView2(paddingValues: PaddingValues, viewModel: CalcularViewModel2
         //verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var precio by remember { mutableStateOf("") }
-        var descuento by remember { mutableStateOf("") }
-        var precioDescuento by remember { mutableStateOf(0.0) }
-        var totalDescuento by remember { mutableStateOf(0.0) }
-        var showAlert by remember { mutableStateOf(false) }
 
         TwoCards(
             title1 = "Total",
-            number1 = totalDescuento,
+            number1 = viewModel.totalDescuento,
             title2 = "Descuento",
-            number2 = precioDescuento
+            number2 = viewModel.precioDescuento
         )
 
-        MainTextField(value = precio, onValueChange = { precio = it }, label = "Precio")
+        MainTextField(
+            value = viewModel.precio,
+            onValueChange = { viewModel.setOnValue(it, "precio") },
+            label = "Precio"
+        )
         SpaceH()
-        MainTextField(value = descuento, onValueChange = { descuento = it }, label = "Descuento %")
+        MainTextField(
+            value = viewModel.descuento,
+            onValueChange = { viewModel.setOnValue(it, "descuento") },
+            label = "Descuento %"
+        )
         SpaceH(10.dp)
         MainButton(text = "Generar descuento") {
 //            val result = viewModel.calcular(precio, descuento)
@@ -86,17 +89,17 @@ fun ContentHomeView2(paddingValues: PaddingValues, viewModel: CalcularViewModel2
         }
         SpaceH()
         MainButton(text = "Limpiar", color = Color.Red) {
-            precio = ""
+            /*precio = ""
             descuento = ""
             precioDescuento = 0.0
-            totalDescuento = 0.0
+            totalDescuento = 0.0*/
         }
 
-        if (showAlert){
+        if (viewModel.showAlert) {
             Alert(title = "Alerta",
                 message = "Escribe el precio y descuento",
                 confirmText = "Aceptar",
-                onConfirmClick = { showAlert = false }) { }
+                onConfirmClick = { viewModel.onValueShowAlert(false) }) { }
         }
 
     }
