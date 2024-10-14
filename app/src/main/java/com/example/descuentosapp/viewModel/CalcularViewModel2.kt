@@ -23,14 +23,15 @@ class CalcularViewModel2: ViewModel() {
     var showAlert by mutableStateOf(false)
         private set
 
-    fun onValuePrecio(value: String) {
+    //Funciones de setteo para cuandos on pocos campos!
+
+    /*fun onValuePrecio(value: String) {
         precio = value
     }
 
-    //Funciones de setteo para cuandos on pocos campos!
     fun onValueDescuento(value: String) {
         descuento = value
-    }
+    }*/
 
     fun onValueShowAlert(value: Boolean) {
         showAlert = value
@@ -42,4 +43,35 @@ class CalcularViewModel2: ViewModel() {
             "descuento" -> descuento = value
         }
     }
+
+    fun calcular() {
+        if(precio != "" && descuento != ""){
+            precioDescuento = calcularPrecio(precio.toDouble(), descuento.toDouble())
+            totalDescuento = calcularDescuento(precio.toDouble(), descuento.toDouble())
+        }else{
+            showAlert = true
+        }
+    }
+
+
+    private fun calcularPrecio(precio:Double, descuento:Double): Double{
+        val res = precio - calcularDescuento(precio, descuento )
+        return kotlin.math.round(res * 100) /100.0
+    }
+
+    private fun calcularDescuento(precio:Double, descuento:Double): Double {
+        val res = precio * ( 1 - descuento /100 )
+        return kotlin.math.round(res * 100) /100.0
+    }
+
+    fun limpiar() {
+        precio = ""
+        descuento = ""
+        precioDescuento = 0.0
+        totalDescuento = 0.0
+    }
+    fun cancelAlert() {
+        showAlert = false
+    }
+
 }

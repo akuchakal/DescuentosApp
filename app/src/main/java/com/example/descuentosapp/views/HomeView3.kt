@@ -26,11 +26,12 @@ import com.example.descuentosapp.components.MainTextField
 import com.example.descuentosapp.components.SpaceH
 import com.example.descuentosapp.components.TwoCards
 import com.example.descuentosapp.viewModel.CalcularViewModel2
+import com.example.descuentosapp.viewModel.CalcularViewModel3
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeView2(viewModel: CalcularViewModel2) {
+fun HomeView3(viewModel: CalcularViewModel3) {
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
             title = { Text(text = "App descuentos", color = Color.White) },
@@ -39,12 +40,12 @@ fun HomeView2(viewModel: CalcularViewModel2) {
             )
         )
     }) {
-        ContentHomeView2(it, viewModel)
+        ContentHomeView3(it, viewModel)
     }
 }
 
 @Composable
-fun ContentHomeView2(paddingValues: PaddingValues, viewModel: CalcularViewModel2) {
+fun ContentHomeView3(paddingValues: PaddingValues, viewModel: CalcularViewModel3) {
     Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -54,21 +55,23 @@ fun ContentHomeView2(paddingValues: PaddingValues, viewModel: CalcularViewModel2
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        val state = viewModel.state
+
         TwoCards(
             title1 = "Total",
-            number1 = viewModel.totalDescuento,
+            number1 = state.totalDescuento,
             title2 = "Descuento",
-            number2 = viewModel.precioDescuento
+            number2 = state.precioDescuento
         )
 
         MainTextField(
-            value = viewModel.precio,
+            value = state.precio,
             onValueChange = { viewModel.setOnValue(it, "precio") },
             label = "Precio"
         )
         SpaceH()
         MainTextField(
-            value = viewModel.descuento,
+            value = state.descuento,
             onValueChange = { viewModel.setOnValue(it, "descuento") },
             label = "Descuento %"
         )
@@ -97,7 +100,7 @@ fun ContentHomeView2(paddingValues: PaddingValues, viewModel: CalcularViewModel2
             totalDescuento = 0.0*/
         }
 
-        if (viewModel.showAlert) {
+        if (state.showAlert) {
             Alert(title = "Alerta",
                 message = "Escribe el precio y descuento",
                 confirmText = "Aceptar",
